@@ -33,7 +33,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <iron-ajax url="../data.json" last-response="{{data}}" auto></iron-ajax>
       <iron-list items="[[data]]" scroll-target="document" as="item" grid>
-          <template is="dom-bind">
+          <template>
                 <div class="hack-card">
                    <paper-card heading="Name: [[item.name]]" image="http://placehold.it/350x150/FFC107/000000" alt="Emmental">
                         <div class="card-content">
@@ -45,12 +45,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         </div>
                    </paper-card>
                </div>
-                <!--<div class="card">
-                <div>
-                  Name: [[item.name]]
-                  Age: [[item.age]]
-                </div>
-            </div>-->
           </template>
     </iron-list>
 
