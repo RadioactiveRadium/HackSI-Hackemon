@@ -40,6 +40,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --paper-icon-button-ink-color: white;
       }
 
+      app-toolbar{
+        /* Toolbar is the main header, so give it some color */
+        background-color: #1E88E5;
+        font-family: 'Roboto', Helvetica, sans-serif;
+        color: white;
+        --app-toolbar-font-size: 24px;
+      }
+
+      app-buttonEffect{
+          font-family: 'Roboto', Helvetica, sans-serif;
+          color: white;
+      }
+
       .drawer-list {
         margin: 0 20px;
       }
@@ -92,6 +105,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </app-toolbar>
         </app-header>
 
+      <app-buttonEffect>
         <iron-pages
             selected="[[page]]"
             attr-for-selected="name"
@@ -103,6 +117,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <my-view4 name="view4"></my-view4>
           <my-view404 name="view404"></my-view404>
         </iron-pages>
+      </app-buttonEffect>
+
       </app-header-layout>
     </app-drawer-layout>
   </template>
