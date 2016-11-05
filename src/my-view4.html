@@ -11,29 +11,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="shared-styles.html">
 
-<dom-module id="my-view2">
+<dom-module id="my-view4">
   <template>
     <style include="shared-styles">
       :host {
         display: block;
-        height: 500px;
         padding: 10px;
       }
 
-      .pic{
-          width: 250px;
-          height: 250px;
-          box-shadow: 2px 2px 20px;
+      .hackathon-name{
+          padding-top: 0px;
+          margin-top: 0px;
+          font-size: 20px;
+          color: grey;
+          border-bottom-color: rgb(200, 200, 200);
+          border-bottom-width: 2px;
+          border-bottom-style: dashed;
+          text-align:center;
       }
 
-      .container{
-          display: inline-block;
-          min-width: 475px;
+      .team-name{
+          font-size:24px;
+          color: rgb(100, 100, 255);
+          text-align: center;
       }
 
-      .info{
-          float: right;
-          padding: 25px;
+      .description{
+          text-align: center;
       }
 
       .hack-card{
@@ -46,31 +50,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           float: right;
       }
 
+      .team-members{
+          padding-top: 0px;
+          margin-top: 0px;
+          font-size: 20px;
+          color: grey;
+          text-align:center;
+      }
     </style>
 
-    <iron-ajax></iron-ajax>
     <div class="card">
-        <div class="container">
-            <div center-justified class="circle pic">
-              <!-- <img> -->
-          </div>
-          <div class="info">
-              <h1>Name</h1>
-              <p>Email | Slack | Git hub</p>
-              <p>Description</p>
-          </div>
-      </div>
-
+      <p class="hackathon-name">Hackathon</p>
+      <p class="team-name">Team Let's Hack!</p>
+      <p class="description">This is the description of our awesome team!</p>
     </div>
 
-<<<<<<< HEAD
-    <!-- <p>Common Hackers / Hackers Near you or something to make the page fill</p> -->
-    <iron-ajax url="../data.json" last-response="{{data}}" params='{"results": 3}'></iron-ajax>
-    <iron-list items="[[data]]"lastVisibleIndex="3" scroll-target="document" as="item" grid>
-=======
-    <!-- <p>Hackers on your team</p> -->
+    <p class="team-members">Team Members</p>
+    <iron-ajax url="../data.json" last-response="{{data}}" auto></iron-ajax>
     <iron-list items="[[data]]" scroll-target="document" as="item" grid>
->>>>>>> View 4 added
         <!--  Relvant people -->
         <template>
               <div class="hack-card">
@@ -83,12 +80,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
              </div>
         </template>
     </iron-list>
-
   </template>
 
   <script>
     Polymer({
-      is: 'my-view2'
+      is: 'my-view4'
     });
   </script>
 </dom-module>
