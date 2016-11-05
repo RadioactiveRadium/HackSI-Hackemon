@@ -28,6 +28,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       .container{
           display: inline-block;
+          min-width: 475px;
       }
 
       .info{
@@ -43,7 +44,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
 
-    <iron-ajax url="../data.json" last-response="{{data}}" auto></iron-ajax>
+    <iron-ajax></iron-ajax>
     <div class="card">
         <div class="container">
             <div center-justified class="circle pic">
@@ -59,7 +60,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </div>
 
     <!-- <p>Common Hackers / Hackers Near you or something to make the page fill</p> -->
-    <iron-list items="[[data]]" scroll-target="document" as="item" grid>
+    <iron-ajax url="../data.json" last-response="{{data}}" params='{"results": 3}'></iron-ajax>
+    <iron-list items="[[data]]"lastVisibleIndex="3" scroll-target="document" as="item" grid>
         <!--  Relvant people -->
         <template>
               <div class="hack-card">
