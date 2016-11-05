@@ -11,6 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
 
 <link rel="import" href="shared-styles.html">
 
@@ -21,21 +22,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
 
         padding: 10px;
+        margin: 10px;
       }
+
     </style>
 
-    <div class="card">
-     <template is="dom-bind">
-      <iron-ajax url="../data.json" last-response="{{data}}" auto></iron-ajax>
-        <iron-list items="[[data]]" as="item">
-          <template>
-            <div>
-              Name: [[item.name]]
-            </div>
+    <iron-ajax url="../data.json" last-response="{{data}}" auto></iron-ajax>
+      <iron-list items="[[data]]" as="item">
+          <template is="dom-bind">
+               <template>
+                   <paper-card heading="Name: [[item.name]]" image="http://placehold.it/350x150/FFC107/000000" alt="Emmental">
+                     <div class="card-content">
+                         Content: [[item.content]]
+                    </div>
+                     <div class="card-actions">
+                       <paper-button>Share</paper-button>
+                       <paper-button>Explore!</paper-button>
+                     </div>
+                   </paper-card>
+                <!--<div class="card">
+                <div>
+                  Name: [[item.name]]
+                  Age: [[item.age]]
+                </div>
+            </div>-->
+              </template>
           </template>
-        </iron-list>
-      </template>
-    </div>
+
+
+    </iron-list>
   </template>
 
   <script>
