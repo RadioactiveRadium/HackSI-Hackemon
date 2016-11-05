@@ -20,37 +20,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style include="shared-styles">
       :host {
         display: block;
+        padding: 5px;
+      }
 
-        padding: 10px;
-        margin: 10px;
+      .hack-card{
+          padding: 10px;
+          height: 250px;
+          width: 300px;
       }
 
     </style>
 
     <iron-ajax url="../data.json" last-response="{{data}}" auto></iron-ajax>
-      <iron-list items="[[data]]" as="item">
-          <template is="dom-bind">
-               <template>
+      <iron-list items="[[data]]" scroll-target="document" as="item" grid>
+          <template>
+                <div class="hack-card">
                    <paper-card heading="Name: [[item.name]]" image="http://placehold.it/350x150/FFC107/000000" alt="Emmental">
-                     <div class="card-content">
-                         Content: [[item.content]]
-                    </div>
-                     <div class="card-actions">
-                       <paper-button>Share</paper-button>
-                       <paper-button>Explore!</paper-button>
-                     </div>
+                        <div class="card-content">
+                            Content: [[item.content]]
+                        </div>
+                        <div class="card-actions">
+                           <paper-button>Share</paper-button>
+                           <paper-button>Explore!</paper-button>
+                        </div>
                    </paper-card>
-                <!--<div class="card">
-                <div>
-                  Name: [[item.name]]
-                  Age: [[item.age]]
-                </div>
-            </div>-->
-              </template>
+               </div>
           </template>
-
-
     </iron-list>
+
   </template>
 
   <script>
