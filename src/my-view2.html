@@ -11,6 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
 
 <dom-module id="my-view2">
   <template>
@@ -37,6 +38,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           padding: 25px;
       }
 
+
+      .info-bottom{
+        float: bottom;
+        padding: 25px;
+      }
+
+      .pic-small{
+          width: 125px;
+          height: 125px;
+          box-shadow: 1px 1px 5px;
+      }
+
       .hack-card{
           padding: 10px;
           height: 250px;
@@ -47,21 +60,45 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           float: right;
       }
 
+      .card-phone{
+        max-width: 600px
+      }
+
+
     </style>
 
     <iron-ajax></iron-ajax>
-    <div class="card">
-        <div class="container">
-            <div center-justified class="circle pic">
-              <!-- <img> -->
-          </div>
-          <div class="info">
-              <h1>Name</h1>
-              <p>Email | Slack | Git hub</p>
-              <p>Description</p>
-          </div>
+    <iron-media-query query="(min-width: 800px)" query-matches="{{wide}}"></iron-media-query>
+    <iron-media-query full query="print" query-matches="{{print}}"></iron-media-query>
+    <div class="container" wide-layout$="{{wide}}"> </div>
+    <template is="dom-if" if="{{!wide}}">
+      <div class="card-phone card">
+        <div center-justified class="circle pic">
+          <!-- <img> -->
       </div>
-    </div>
+        <div class="info-bottom">
+                 <h1>Name</h1>
+                 <p>Email | Slack | Git hub</p>
+                 <p>Description</p>
+         </div>
+      </div>
+    </template>
+
+    <template is="dom-if" if="{{wide}}">
+      <div class="card">
+          <div class="container">
+              <div center-justified class="circle pic">
+                <!-- <img> -->
+            </div>
+            <div class="info">
+                <h1>Name</h1>
+                <p>Email | Slack | Git hub</p>
+                <p>Description</p>
+            </div>
+        </div>
+      </div>
+    </template>
+
 
     <!-- <p>Common Hackers / Hackers Near you or something to make the page fill</p> -->
     <iron-ajax url="../data.json" last-response="{{data}}" auto></iron-ajax>
