@@ -36,7 +36,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
 
-    <iron-ajax url="../data.json" last-response="{{data}}" auto></iron-ajax>
+
       <iron-list items="[[data]]" scroll-target="document" as="item" grid>
           <template>
                 <div class="hack-card">
@@ -54,7 +54,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
     Polymer({
-      is: 'my-view1'
+      is: 'my-view1',
+      properties:{
+        data: {
+          type: Object
+        }
+      }
     });
   </script>
 </dom-module>
