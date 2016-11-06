@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
-
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
@@ -36,7 +36,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
 
-    <iron-ajax url="../data.json" last-response="{{data}}" auto></iron-ajax>
+
       <iron-list items="[[data]]" scroll-target="document" as="item" grid>
           <template>
                 <div class="hack-card">
@@ -54,7 +54,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
     Polymer({
-      is: 'my-view1'
+      is: 'my-view1',
+      properties:{
+        data: {
+          type: Object
+        }
+      }
     });
   </script>
 </dom-module>

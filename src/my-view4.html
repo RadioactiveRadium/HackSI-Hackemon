@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="my-view4">
@@ -49,7 +50,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .close-button{
           float: right;
       }
-
+     .container{
+          display: inline-block;
+          min-width: 475px;
+      }
       .team-members{
           padding-top: 0px;
           margin-top: 0px;
@@ -59,24 +63,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-    <div class="card">
-      <p class="hackathon-name">Hackathon</p>
-      <p class="team-name">Team Let's Hack!</p>
-      <p class="description">This is the description of our awesome team!</p>
-    </div>
-
-    <p class="team-members">Team Members</p>
+    <iron-ajax url="../teams.json" last-response="{{teams}}" auto></iron-ajax>
+    <iron-list items="[[teams]]" scroll-target="document" as="team" grid>
     <iron-ajax url="../data.json" last-response="{{data}}" auto></iron-ajax>
-    <iron-list items="[[data]]" scroll-target="document" as="item" grid>
+    <iron-list items="[[data]]" scroll-target="document" as="member" grid>
         <!--  Relvant people -->
         <template>
-              <div class="hack-card">
-                 <paper-card heading="Name: [[item.name]]" image="http://placehold.it/350x150/FFC107/000000" alt="Emmental">
+            <div class="container">
+              <div class="card">
+                <p class="hackathon-name">[[team.hackathon]]</p>
+                <!-- Logic: Sort team cards by hackathon so same hackathons are grouped together -->
+                <p class="team-name">[[team.team-name]]</p>
+                <p class="description">[[team.description]]</p>
+              </div>
+             <p class="team-members">Team Members</p>
+            
+            <!-- Print each member of corresponding team -->
+            <!-- Logic: Needs to be where team.team-name == member.team-name -->
+             <div class="hack-card">
+                 <paper-card heading="Name: [[member.name]]" image="http://placehold.it/350x150/FFC107/000000" alt="Emmental">
                       <div class="card-actions">
                          <paper-icon-button icon="star"></paper-icon-button>
                          <paper-icon-button class="close-button" icon="close"></paper-icon-button>
                       </div>
                  </paper-card>
+             </div>
+             
              </div>
         </template>
     </iron-list>
