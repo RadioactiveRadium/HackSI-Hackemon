@@ -1,7 +1,10 @@
 [
   {"name": "Bob",
-    "content": "oifs duinsanvius guigndfsg n ngiun indfsui gndfsui ngdfsug udfn gdfnskjgdfsn lgknsdkjlfgndfskjn gkjdfsn gjndfjg ndfkjgnjkd sfn gjkdfsn jkgndsfjk ndfjsn gdgskj"},
-  {"name": "Tim"},
-  {"name": "Mike"},
-  {"name": "John"}
+    "team-name": "Skunks"},
+  {"name": "Tim",
+  "team-name": "Let's Hack"},
+  {"name": "Mike",
+  "team-name": "Skunks"},
+  {"name": "John",
+  "team-name": "Rick Ross"}
 ]
