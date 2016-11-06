@@ -106,11 +106,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <paper-button raised on-tap="signIn"></paper-button>
       <paper-button raised on-tap="signOut"></paper-button>
     </div> 
-    <firebase-document
-  path="/0/name"
-  data="{{hackedexData}}">
-</firebase-document>
 
+    <iron-ajax url="../data.json" last-response="{{hackemonData}}" auto></iron-ajax>
     <app-location route="{{route}}"></app-location>
     <app-route
         route="{{route}}"
@@ -151,7 +148,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
-          <my-view1 name="view1"  data="[[data]]"></my-view1>
+          <my-view1 name="view1"  data="[[hackemonData]]"></my-view1>
           <my-view2 name="view2"></my-view2>
           <my-view3 name="view3"></my-view3>
           <my-view4 name="view4"></my-view4>
