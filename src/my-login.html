@@ -24,17 +24,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
 
     <div class="card">
-        <iron-icon hidden$=[[statusKnown]] icon="vaadin-icons:key"></iron-icon>
-        <iron-icon hidden$=[[!statusKnown]] icon="vaadin-icons:key-o"></iron-icon>
+        <table>
+          <tr><th>uid</th> <td>[[user.uid]]</td></tr>
+          <tr><th>displayName</th> <td>[[user.displayName]]</td></tr>
+          <tr><th>email</th> <td>[[user.email]]</td></tr>
+          <tr><th>emailVerified</th> <td>[[user.emailVerified]]</td></tr>
+        </table>
+
   </template>
 
   <script>
     Polymer({
       is: 'my-login',
       properties:{
-        statusKnown: {
-          type: Boolean
-        }
+        user: Object
       }
     });
   </script>

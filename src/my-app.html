@@ -22,10 +22,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-app.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-document.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../bower_components/vaadin-icons/vaadin-icons.html">
-
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="my-icons.html">
 
 <dom-module id="my-app">
@@ -61,7 +62,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       .login-page {
         position: absolute;
-        top: 0;
+        top: 700px;
         left: 0;
         right: 0;
         bottom: 0;
@@ -95,15 +96,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     <firebase-app
-      api-key="Insert_Api_Key"
+      api-key="AIzaSyCFzuQhSUf6Q6TtuY_CRV7ykj8zu2AJEYo"
       database-url="https://hacksi-hackemon.firebaseio.com"
       auth-domain="hacksi-hackemon.firebaseapp.com"
       storage-bucket="hacksi-hackemon.appspot.com">
     </firebase-app>
-    <firebase-auth id="auth" user="{{user}}" online="{{online}}" status-known="{{statusKnown}}"></firebase-auth>
-      <!--      <div class="login-page" hidden$="[[!statusKnown]]">
+    <firebase-auth id="auth" user="{{user}}" online="{{online}}" signedIn= "{{signedIn}}"provider="google"></firebase-auth>
+<div class="login-page" hidden$="[[!!user]]">
       <paper-button raised on-tap="signIn"></paper-button>
-    </div> -->
+      <paper-button raised on-tap="signOut"></paper-button>
+    </div> 
+    <firebase-document
+  path="/0/name"
+  data="{{hackedexData}}">
+</firebase-document>
+
     <app-location route="{{route}}"></app-location>
     <app-route
         route="{{route}}"
@@ -122,6 +129,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <a name="view4" href="/view4">View Four</a>
           <a name="login" href="/login">login</a>
         </iron-selector>
+>
       </app-drawer>
 
       <!-- Main content -->
@@ -143,11 +151,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
-          <my-view1 name="view1"></my-view1>
+          <my-view1 name="view1"  data="[[data]]"></my-view1>
           <my-view2 name="view2"></my-view2>
           <my-view3 name="view3"></my-view3>
           <my-view4 name="view4"></my-view4>
-          <my-login name="login" statusKnown="[[statusKnown]]"></my-login>
+          <my-login name="login" user="{{user}}"></my-login>
           <my-view404 name="view404"></my-view404>
         </iron-pages>
       </app-buttonEffect>
@@ -169,20 +177,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       observers: [
-        '_routePageChanged(routeData.page)',
-        'autoAuth(user, statusKnown)'
+        '_routePageChanged(routeData.page)'
       ],
 
-      autoAuth: function(user, statusKnown){
-        if(statusKnown && !user){
-          this.$.auth.signInAnonymously();
-          console.log("anonymous");
-        }
-      },
       
       signIn: function(){
-        let google = new firebase.auth.GoogleAuthProvider();
-        this.user.linkWithPopup(google);
+        this.$.auth.signInWithPopup();
       },
 
       signOut: function(){
