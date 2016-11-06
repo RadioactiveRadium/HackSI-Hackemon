@@ -9,6 +9,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="my-view3">
@@ -19,14 +22,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         padding: 10px;
       }
+
+      .hackthon-name{
+          font-size: 16px;
+          width: 100%;
+          color: grey;
+          padding-left: 5%;
+          border-bottom: 2px dashed grey;
+      }
     </style>
 
-    <div class="card">
-      <div class="circle">3</div>
-      <h1>View Three</h1>
-      <p>Modus commodo minimum eum te, vero utinam assueverit per eu.</p>
-      <p>Ea duis bonorum nec, falli paulo aliquid ei eum.Has at minim mucius aliquam, est id tempor laoreet.Pro saepe pertinax ei, ad pri animal labores suscipiantur.</p>
-    </div>
+    <iron-ajax url="../teams.json" last-response="{{teams}}" auto></iron-ajax>
+    <iron-list items="[[teams]]" scroll-target="document" as="hack" grid>
+        <template>
+            <p class="hackthon-name">[[hack.hackathon]]</p>
+            <!-- <paper-card heading="[[team.hackathon]]"> -->
+            <!-- </paper-card> -->
+            <div class="hack-scroll">
+            <iron-list items="[[ hack.teams ]]" scroll-target="hack-scroll" as="team" grid>
+                <template>
+                    <p>[[team.team-name]]</p>
+                    <div class="hack-card">
+                        <paper-card heading="[[team.team-name]]">
+                        </paper-card>
+                    </div>
+                </template>
+            </iron-list>
+        </div>
+        </template>
+    </iron-list>
+
   </template>
 
   <script>
