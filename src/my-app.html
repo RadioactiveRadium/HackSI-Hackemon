@@ -20,6 +20,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="my-icons.html">
 
 <dom-module id="my-app">
@@ -53,6 +56,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           color: white;
       }
 
+      .login-page {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #660000;
+        transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 2;
+        color: white;
+      }
+
       .drawer-list {
         margin: 0 20px;
       }
@@ -75,7 +90,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-weight: bold;
       }
     </style>
+    <firebase-app
+      api-key="firebase-api-key"
+      database-url="https://hacksi-hackemon.firebaseio.com"
+      auth-domain="hacksi-hackemon.firebaseapp.com"
+      storage-bucket="hacksi-hackemon.appspot.com">
+    </firebase-app>
+    <firebase-auth id="auth" user="{{user}}" online="{{online}}" provider="google" ></firebase-auth>
 
+    <div class="login-page">
+      <paper-button raised on-tap="signIn">Google</paper-button>
+    </div>
     <app-location route="{{route}}"></app-location>
     <app-route
         route="{{route}}"
@@ -136,8 +161,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       observers: [
-        '_routePageChanged(routeData.page)'
+        '_routePageChanged(routeData.page)',
+        'autoAuth(user, statusKnown)'
       ],
+
+      autoAuth: function(user, statusKnown){
+        if(statusKnown && !user){
+          this.$.auth.signInAnonymously();
+        }
+      },
+      
+      signIn: function(){
+        let google = new firebase.auth.GoogleAuthProvider();
+        this.user.linkWithPopup(google);
+      },
 
       _routePageChanged: function(page) {
         this.page = page || 'view1';
