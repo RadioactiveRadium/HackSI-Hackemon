@@ -20,13 +20,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-document.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/vaadin-icons/vaadin-icons.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="my-icons.html">
 
 <dom-module id="my-app">
   <template>
     <style>
       :host {
-        --app-primary-color: #4285f4;
+        --app-primary-color: #660000;
         --app-secondary-color: black;
 
         display: block;
@@ -38,6 +45,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       app-header paper-icon-button {
         --paper-icon-button-ink-color: white;
+      }
+
+      app-toolbar{
+        /* Toolbar is the main header, so give it some color */
+        background-color: #660000;
+        font-family: 'Roboto', Helvetica, sans-serif;
+        color: white;
+        --app-toolbar-font-size: 24px;
+      }
+
+      app-buttonEffect{
+          font-family: 'Roboto', Helvetica, sans-serif;
+          color: white;
+      }
+
+      .login-page {
+        position: absolute;
+        top: 700px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+/*background-color: #660000; */
+        transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 2;
+        color: white;
+        text-align: center;
       }
 
       .drawer-list {
@@ -62,7 +95,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-weight: bold;
       }
     </style>
+    <firebase-app
+      api-key="AIzaSyCFzuQhSUf6Q6TtuY_CRV7ykj8zu2AJEYo"
+      database-url="https://hacksi-hackemon.firebaseio.com"
+      auth-domain="hacksi-hackemon.firebaseapp.com"
+      storage-bucket="hacksi-hackemon.appspot.com">
+    </firebase-app>
+    <firebase-auth id="auth" user="{{user}}" online="{{online}}" signedIn= "{{signedIn}}"provider="google"></firebase-auth>
+<div class="login-page" hidden$="[[!!user]]">
+      <paper-button raised on-tap="signIn"></paper-button>
+      <paper-button raised on-tap="signOut"></paper-button>
+    </div> 
 
+    <iron-ajax url="../data.json" last-response="{{hackemonData}}" auto></iron-ajax>
     <app-location route="{{route}}"></app-location>
     <app-route
         route="{{route}}"
@@ -79,6 +124,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <a name="view2" href="/view2">View Two</a>
           <a name="view3" href="/view3">View Three</a>
           <a name="view4" href="/view4">View Four</a>
+          <a name="login" href="/login">login</a>
         </iron-selector>
       </app-drawer>
 
@@ -89,20 +135,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <app-toolbar>
             <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
             <div main-title>Hackemon</div>
+
           </app-toolbar>
+          
+          
         </app-header>
 
+      <app-buttonEffect>
         <iron-pages
             selected="[[page]]"
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
-          <my-view1 name="view1"></my-view1>
+          <my-view1 name="view1"  data="[[hackemonData]]"></my-view1>
           <my-view2 name="view2"></my-view2>
           <my-view3 name="view3"></my-view3>
           <my-view4 name="view4"></my-view4>
+          <my-login name="login" user="{{user}}"></my-login>
           <my-view404 name="view404"></my-view404>
         </iron-pages>
+      </app-buttonEffect>
+
       </app-header-layout>
     </app-drawer-layout>
   </template>
@@ -116,12 +169,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: String,
           reflectToAttribute: true,
           observer: '_pageChanged'
-        }
+        },
       },
 
       observers: [
         '_routePageChanged(routeData.page)'
       ],
+
+      
+      signIn: function(){
+        this.$.auth.signInWithPopup();
+      },
+
+      signOut: function(){
+        this.$.auth.signOut()
+      },
 
       _routePageChanged: function(page) {
         this.page = page || 'view1';
