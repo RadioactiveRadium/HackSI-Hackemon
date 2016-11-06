@@ -1,0 +1,28 @@
+{
+  "hackathons" : {
+    "hacksi" : {
+      "members" : {
+        "id0" : "Jake",
+        "id1" : "Ayush",
+        "id2" : "Arjun",
+        "uid1" : {
+          "github" : "giturl",
+          "linkedin" : "linkedinurl",
+          "name" : "Jake",
+          "website" : "httpwebsite"
+        }
+      },
+      "teams" : {
+        "PolyFire" : {
+          "members" : {
+            "id0" : "Jake",
+            "id1" : "Ayush",
+            "id2" : "Alec",
+            "id3" : "Arjun",
+            "id4" : "Sammy"
+          }
+        }
+      }
+    }
+  }
+}
