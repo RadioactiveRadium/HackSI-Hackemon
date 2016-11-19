@@ -25,6 +25,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymerfire/firebase-document.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/iron-dropdown/demo/x-select.html">
 <link rel="import" href="../bower_components/vaadin-icons/vaadin-icons.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="my-icons.html">
@@ -94,18 +95,49 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         font-weight: bold;
       }
+
+
+
+      .dropdown-content {
+          position: absolute;
+          background-color: white;
+          border-radius: 3px;
+          box-shadow: 0px 2px 6px #ccc;
+          color: black;
+          min-width: 250px !important;
+          min-height: 220px !important;
+          overflow-x: hidden !important;
+        }
+
+        .fill{
+            margin: 0;
+            width: 100%;
+        }
+
+        .no{
+            color:black;
+            text-decoration: none;
+        }
+
     </style>
     <firebase-app
-      api-key="AIzaSyCFzuQhSUf6Q6TtuY_CRV7ykj8zu2AJEYo"
-      database-url="https://hacksi-hackemon.firebaseio.com"
-      auth-domain="hacksi-hackemon.firebaseapp.com"
-      storage-bucket="hacksi-hackemon.appspot.com">
+        api-key="AIzaSyCFzuQhSUf6Q6TtuY_CRV7ykj8zu2AJEYo"
+        database-url="https://hacksi-hackemon.firebaseio.com/"
+        auth-domain="hacksi-hackemon.firebaseapp.com"
+        storage-bucket="hacksi-hackemon.appspot.com">
     </firebase-app>
-    <firebase-auth id="auth" user="{{user}}" online="{{online}}" signedIn= "{{signedIn}}"provider="google"></firebase-auth>
-<div class="login-page" hidden$="[[!!user]]">
-      <paper-button raised on-tap="signIn"></paper-button>
-      <paper-button raised on-tap="signOut"></paper-button>
-    </div> 
+    <firebase-auth
+        id="auth"
+        user="{{user}}"
+        online="{{online}}"
+        statusKnown = "{{statusKnown}}"
+        provider="google">
+    </firebase-auth>
+
+    <!-- <div class="login-page" hidden$="[[!user]]"> -->
+        <!-- <paper-button raised on-tap="signIn"></paper-button> -->
+        <!-- <paper-button raised on-tap="signOut"></paper-button> -->
+    <!-- </div> -->
 
     <iron-ajax url="../data.json" last-response="{{hackemonData}}" auto></iron-ajax>
     <app-location route="{{route}}"></app-location>
@@ -121,10 +153,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-toolbar>Menu</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a name="view1" href="/view1">Encountered Hackemon</a>
-          <a name="view2" href="/view2">View Two</a>
-          <a name="view3" href="/view3">View Three</a>
-          <a name="view4" href="/view4">View Four</a>
-          <a name="login" href="/login">login</a>
+          <!-- <a name="view2" href="/view2">My Profile</a> -->
+          <a name="view3" href="/view3">Hackathons</a>
+          <a name="view4" href="/view4">Groups(Temp)</a>
+          <!-- <a name="login" href="/login">login</a> -->
         </iron-selector>
       </app-drawer>
 
@@ -136,9 +168,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
             <div main-title>Hackemon</div>
 
+            <paper-button on-tap="signIn" hidden$="[[user]]">Sign In</paper-button>
+            <div hidden$="[[!user]]">
+                <x-select horizontal-align="left" vertical-align="bottom">
+                    <paper-button class="dropdown-trigger">Hello, [[user.displayName]]!</paper-button>
+                    <div class="dropdown-content">
+                        <a class="no" name="view2" href="/view2">
+                            <paper-button class="fill">Profile</paper-button>
+                        </a>
+                        <a class="no" name="view2" href="/view2">
+                            <paper-button class="fill">Edit</paper-button>
+                        </a>
+                        <paper-button on-tap="signOut" class="fill">Sign Out</paper-button>
+
+                    </div>
+                </x-select>
+            </div>
           </app-toolbar>
-          
-          
+
+
         </app-header>
 
       <app-buttonEffect>
@@ -151,7 +199,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <my-view2 name="view2"></my-view2>
           <my-view3 name="view3"></my-view3>
           <my-view4 name="view4"></my-view4>
-          <my-login name="login" user="{{user}}"></my-login>
+          <!-- <my-login name="login" user="{{user}}"></my-login> -->
           <my-view404 name="view404"></my-view404>
         </iron-pages>
       </app-buttonEffect>
@@ -168,21 +216,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         page: {
           type: String,
           reflectToAttribute: true,
-          observer: '_pageChanged'
+          observer: '_pageChanged',
         },
+
+        user: {
+            type: Object
+        },
+
+        statusKnown: {
+            type: Object
+        }
       },
 
       observers: [
         '_routePageChanged(routeData.page)'
       ],
 
-      
+
       signIn: function(){
-        this.$.auth.signInWithPopup();
+        return this.$.auth.signInWithPopup();
       },
 
       signOut: function(){
-        this.$.auth.signOut()
+        return this.$.auth.signOut()
       },
 
       _routePageChanged: function(page) {

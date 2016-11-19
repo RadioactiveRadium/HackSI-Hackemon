@@ -13,6 +13,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../bower_components/vaadin-icons/vaadin-icons.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+
 <dom-module id="my-login">
   <template>
     <style include="shared-styles">
@@ -30,6 +32,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <tr><th>email</th> <td>[[user.email]]</td></tr>
           <tr><th>emailVerified</th> <td>[[user.emailVerified]]</td></tr>
         </table>
+    </div>
 
   </template>
 
